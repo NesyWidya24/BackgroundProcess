@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements AsyncCallback{ //
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params) { //param (accepts string object input),
             Log.d(LOG_ASYNC, "stat: doInBackground");
             String output = null;
             try {
