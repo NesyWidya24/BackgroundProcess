@@ -1,2 +1,3 @@
+include ':simpleservices'
 include ':app'
 rootProject.name = "BackgroundThread"

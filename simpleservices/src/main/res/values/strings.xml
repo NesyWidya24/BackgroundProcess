@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SimpleServices</string>
+    <string name="stopBoundService">Stop Bound Service</string>
+    <string name="startBoundService">Start Bound Service</string>
+    <string name="startIntentService">Start Intent Service</string>
+    <string name="startService">Start Service</string>
+</resources>
