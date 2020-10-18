@@ -1,3 +1,4 @@
+include ':alarmmanager'
 include ':broadcastreceiver'
 include ':simpleservices'
 include ':app'
