@@ -43,22 +43,22 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_once_msg"
+            android:id="@+id/btn_once_time"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_date_range" />
+            android:src="@drawable/ic_access_time" />
 
         <TextView
-            android:id="@+id/tv_once_msg"
+            android:id="@+id/tv_once_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/alarm_date" />
+            android:text="@string/alarm_time" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edt_one_msg"
+        android:id="@+id/edt_once_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
