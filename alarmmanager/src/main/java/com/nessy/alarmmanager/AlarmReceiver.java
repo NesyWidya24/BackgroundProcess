@@ -42,6 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int notifId = type.equalsIgnoreCase(TYPE_ONE_TIME) ? ID_ONETIME : ID_REPEATING;
 
         showToast(context, title, msg);
+        showAlarmNotification(context, title, msg, notifId);
     }
 
     private void showToast(Context context, String title, String msg) {
