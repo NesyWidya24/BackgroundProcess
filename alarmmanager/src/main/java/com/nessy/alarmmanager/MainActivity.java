@@ -21,6 +21,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton btnOnceTime;
     Button btnSetOnce;
 
+    TextView tvRepeat;
+    EditText edtRepeat;
+    ImageButton btnRepeat;
+    Button btnSetRepeat;
+
     private AlarmReceiver alarmReceiver;
 
     @Override
@@ -34,10 +39,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnOnceDate = findViewById(R.id.btn_once_date);
         btnOnceTime = findViewById(R.id.btn_once_time);
         btnSetOnce = findViewById(R.id.btn_set_once_alarm);
+        tvRepeat = findViewById(R.id.tv_repeat_time);
+        btnRepeat = findViewById(R.id.btn_repeat_time);
+        btnSetRepeat = findViewById(R.id.btn_set_repeat);
+        edtRepeat = findViewById(R.id.edt_repeat_msg);
 
         btnOnceTime.setOnClickListener(this);
         btnOnceDate.setOnClickListener(this);
         btnSetOnce.setOnClickListener(this);
+        btnRepeat.setOnClickListener(this);
+        btnSetRepeat.setOnClickListener(this);
 
         alarmReceiver = new AlarmReceiver();
     }
@@ -67,13 +78,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         onceTime,
                         onceMsg);
                 break;
+            case R.id.btn_repeat_time:
+                TimePickerFragment timePickerFragmentRepeat = new TimePickerFragment();
+                timePickerFragmentRepeat.show(getSupportFragmentManager(), TIME_PICKER_REPEAT_TAG);
+                break;
+            case R.id.btn_set_repeat:
+                String repeatTime = tvRepeat.getText().toString();
+                String repeatMsg = edtRepeat.getText().toString();
+                alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
+                        repeatTime, repeatMsg);
+                break;
         }
     }
 
     @Override
     public void onDialogDataSet(String tag, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,dayOfMonth);
+        calendar.set(year, month, dayOfMonth);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         tvOnceDate.setText(dateFormat.format(calendar.getTime()));
@@ -87,9 +108,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
-        switch (tag){
+        switch (tag) {
             case TIME_PICKER_ONCE_TAG:
                 tvOnceTime.setText(dateFormat.format(calendar.getTime()));
+                break;
+            case TIME_PICKER_REPEAT_TAG:
+                tvRepeat.setText(dateFormat.format(calendar.getTime()));
                 break;
             default:
                 break;

@@ -29,9 +29,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String EXTRA_MSG = "msg";
     public static final String EXTRA_TYPE = "type";
 
-//    2 id for 2 type alarm (onetime & repeating)
-    private final int ID_ONETIME =100;
-    private final int ID_REPEATING =101;
+    //    2 id for 2 type alarm (onetime & repeating)
+    private final int ID_ONETIME = 100;
+    private final int ID_REPEATING = 101;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -46,12 +46,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private void showToast(Context context, String title, String msg) {
-        Toast.makeText(context, title + " : " +msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, title + " : " + msg, Toast.LENGTH_LONG).show();
     }
 
-    public void setOneTimeAlarm(Context context, String type, String date, String time, String msg){
+    public void setOneTimeAlarm(Context context, String type, String date, String time, String msg) {
         String DATE_FORMAT = "yyyy-MM-dd";
-        String TIME_FORMAT = "HH:mm";
         if (isDateInvalid(date, DATE_FORMAT) || isDateInvalid(time, TIME_FORMAT)) return;
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -65,20 +64,22 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
-        calendar.set(Calendar.MONTH, Integer.parseInt(dateArray[1])-1);
+        calendar.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dateArray[0]));
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
         calendar.set(Calendar.SECOND, 0);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ONETIME, intent, 0);
-        if (alarmManager != null){
+        if (alarmManager != null) {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
         Toast.makeText(context, "One time alarm set up", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean isDateInvalid(String date, String format){
+    private final String TIME_FORMAT = "HH:mm";
+
+    public boolean isDateInvalid(String date, String format) {
         try {
             DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
             df.setLenient(false);
@@ -89,36 +90,57 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    private void showAlarmNotification(Context context, String title, String msg, int notifId){
+    private void showAlarmNotification(Context context, String title, String msg, int notifId) {
         String CHANNEL_ID = "Channel_1";
         String CHANNEL_NAME = "AlarmManager channel";
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder builder =  new NotificationCompat.Builder(context, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_access_time)
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setColor(ContextCompat.getColor(context, android.R.color.transparent))
-                .setVibrate(new long[]{1000,1000,1000,1000,1000})
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setSound(alarmSound);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     CHANNEL_NAME,
                     NotificationManager.IMPORTANCE_DEFAULT);
 
             channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{1000,1000,1000,1000,1000});
+            channel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
             builder.setChannelId(CHANNEL_ID);
 
-            if (notificationManager != null){
+            if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
         Notification notification = builder.build();
-        if (notificationManager != null){
+        if (notificationManager != null) {
             notificationManager.notify(notifId, notification);
         }
+    }
+
+    public void setRepeatingAlarm(Context context, String type, String time, String msg) {
+        if (isDateInvalid(time, TIME_FORMAT)) return;
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(EXTRA_MSG, msg);
+        intent.putExtra(EXTRA_TYPE, type);
+
+        String[] timeArray = time.split(":");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
+        calendar.set(Calendar.SECOND, 0);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, 0);
+        if (alarmManager != null) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
+        Toast.makeText(context, "Repeating alarm set up", Toast.LENGTH_SHORT).show();
     }
 }
