@@ -35,14 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         tvOnceDate = findViewById(R.id.tv_once_date);
         tvOnceTime = findViewById(R.id.tv_once_time);
-        edtOnceMsg = findViewById(R.id.edt_once_msg);
+        edtOnceMsg = findViewById(R.id.edt_once_msg); //add wajib diisi
         btnOnceDate = findViewById(R.id.btn_once_date);
         btnOnceTime = findViewById(R.id.btn_once_time);
         btnSetOnce = findViewById(R.id.btn_set_once_alarm);
         tvRepeat = findViewById(R.id.tv_repeat_time);
         btnRepeat = findViewById(R.id.btn_repeat_time);
         btnSetRepeat = findViewById(R.id.btn_set_repeat);
-        edtRepeat = findViewById(R.id.edt_repeat_msg);
+        edtRepeat = findViewById(R.id.edt_repeat_msg); //add wajib diisi
 
         btnOnceTime.setOnClickListener(this);
         btnOnceDate.setOnClickListener(this);

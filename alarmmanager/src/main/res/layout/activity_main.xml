@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/one_time_alarm"
+        android:layout_marginBottom="16dp"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -44,7 +45,6 @@
 
         <ImageButton
             android:id="@+id/btn_once_time"
-            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_access_time" />
