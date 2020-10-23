@@ -3,11 +3,13 @@ package com.nessy.alarmmanager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,9 +71,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timePickerFragment.show(getSupportFragmentManager(), TIME_PICKER_ONCE_TAG);
                 break;
             case R.id.btn_set_once_alarm:
-                String onceDate = tvOnceDate.getText().toString();
-                String onceTime = tvOnceTime.getText().toString();
-                String onceMsg = edtOnceMsg.getText().toString();
+                String onceDate = tvOnceDate.getText().toString().trim();
+                String onceTime = tvOnceTime.getText().toString().trim();
+                String onceMsg = edtOnceMsg.getText().toString().trim();
+
+                if (TextUtils.isEmpty(onceMsg)){
+                    edtOnceMsg.setError("Field are Required");
+                    Toast.makeText(MainActivity.this, "Enter Alarm Message..", Toast.LENGTH_SHORT).show();
+                }
 
                 alarmReceiver.setOneTimeAlarm(this, AlarmReceiver.TYPE_ONE_TIME,
                         onceDate,
@@ -85,6 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_set_repeat:
                 String repeatTime = tvRepeat.getText().toString();
                 String repeatMsg = edtRepeat.getText().toString();
+
+                if (TextUtils.isEmpty(repeatMsg)){
+                    edtRepeat.setError("Field are Required");
+                    Toast.makeText(MainActivity.this, "Enter Alarm Repeat Message..", Toast.LENGTH_SHORT).show();
+                }
+
                 alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
                         repeatTime, repeatMsg);
                 break;
