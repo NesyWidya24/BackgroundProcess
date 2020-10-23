@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton btnOnceDate;
     ImageButton btnOnceTime;
     Button btnSetOnce;
+    Button btnCancelRepeat;
 
     TextView tvRepeat;
     EditText edtRepeat;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvRepeat = findViewById(R.id.tv_repeat_time);
         btnRepeat = findViewById(R.id.btn_repeat_time);
         btnSetRepeat = findViewById(R.id.btn_set_repeat);
+        btnCancelRepeat = findViewById(R.id.btn_cancel_repeat);
         edtRepeat = findViewById(R.id.edt_repeat_msg); //add wajib diisi
 
         btnOnceTime.setOnClickListener(this);
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSetOnce.setOnClickListener(this);
         btnRepeat.setOnClickListener(this);
         btnSetRepeat.setOnClickListener(this);
+        btnCancelRepeat.setOnClickListener(this);
 
         alarmReceiver = new AlarmReceiver();
     }
@@ -101,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
                         repeatTime, repeatMsg);
                 break;
+            case R.id.btn_cancel_repeat:
+                alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING);
         }
     }
 

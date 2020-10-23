@@ -144,4 +144,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         Toast.makeText(context, "Repeating alarm set up", Toast.LENGTH_SHORT).show();
     }
+
+    public void cancelAlarm(Context context, String type){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        int requestIntent = type.equalsIgnoreCase(TYPE_ONE_TIME) ? ID_ONETIME : ID_REPEATING;
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestIntent, intent, 0);
+        pendingIntent.cancel();
+
+        if (alarmManager != null){
+            alarmManager.cancel(pendingIntent);
+        }
+
+        Toast.makeText(context, "Repeating alarm canceled", Toast.LENGTH_SHORT).show();
+    }
 }
