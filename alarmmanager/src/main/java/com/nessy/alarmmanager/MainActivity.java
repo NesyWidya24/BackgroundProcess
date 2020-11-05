@@ -105,7 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         repeatTime, repeatMsg);
                 break;
             case R.id.btn_cancel_repeat:
+//                uji kodenya. Skenarionya seperti berikut:
+//
+//            Ubah nilai pada variabel repeatingTime di MainActivity sesuai dengan waktu yang mendekati saat ini (bedakan sekitar 5 menit dari sekarang). Sebagai contoh, saat ini waktu dipasang pada pukul 01.45
+//                Klik tombol SET REPEATING ALARM untuk menjalankan alarm untuk waktu yang ditentukan.
+//                Klik tombol BATALKAN ALARM untuk membatalkan alarm yang baru saja dijalankan.
+//                    Jika sukses seharusnya pada waktu yang diberikan tidak tampil notifikasi alarm seperti sebelumnya.
                 alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING);
+                break;
         }
     }
 
