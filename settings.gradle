@@ -1,4 +1,4 @@
-include ':jobscheduler'
+include ':jobservices'
 include ':alarmmanager'
 include ':broadcastreceiver'
 include ':simpleservices'

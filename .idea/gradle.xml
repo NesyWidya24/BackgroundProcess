@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/alarmmanager" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/broadcastreceiver" />
-            <option value="$PROJECT_DIR$/jobscheduler" />
+            <option value="$PROJECT_DIR$/jobservices" />
             <option value="$PROJECT_DIR$/simpleservices" />
           </set>
         </option>
